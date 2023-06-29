@@ -42,7 +42,7 @@ def trimap(image, name, size, number, erosion=False):
     remake    = np.where(remake > 200, 0, remake)		## Embelishment
     remake    = np.where(remake == 200, 255, remake)		## GRAY to WHITE
 
-    path = "./images/results/"                                  ## Change the directory
+    path = "../images/trimap/"                                  ## Change the directory
     new_name = '{}px_'.format(size) + name + '_{}.png'.format(number);
     cv2.imwrite(os.path.join(path , new_name) , remake)
 
