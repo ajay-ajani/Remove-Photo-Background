@@ -46,14 +46,14 @@ def trimap(image, name, size, number, erosion=False):
     new_name = '{}px_'.format(size) + name + '_{}.png'.format(number);
     cv2.imwrite(os.path.join(path , new_name) , remake)
 
-
+"""
 if __name__ == '__main__':
-    name  = "trimap.png"; 
-    image = cv2.imread(name, cv2.IMREAD_GRAYSCALE)
-    size = 10;         
-    number = name[-5];
+     name  = "trimap.png"; 
+     image = cv2.imread(name, cv2.IMREAD_GRAYSCALE)
+     size = 10;         
+     number = name[-5];
     title = "test_image"
 
     trimap(image, title, size, number, erosion=10);
     print("Here")
-
+"""
