@@ -9,8 +9,7 @@ from tensorflow.keras.utils import CustomObjectScope
 from metrics import dice_loss, dice_coef, iou
 from cutout import perform_image_cutout
 import sys
-#sys.append("./create_trimap/")
-#from trimap_module import trimap
+from trimap_module import trimap
 
 
 """ Global parameters """
@@ -36,7 +35,7 @@ if __name__ == "__main__":
 
     """ Load the dataset """
     data_x = glob("images/*")
-    print(data_x)
+    #print(data_x)
     for path in tqdm(data_x, total=len(data_x)):
          """ Extracting name """
          name = path.split("/")[-1].split(".")[0]
@@ -63,3 +62,15 @@ if __name__ == "__main__":
          background_mask = background_mask * [0, 0, 0]
          final_photo = masked_photo + background_mask
          cv2.imwrite(f"remove_bg/{name}.png", final_photo)
+
+    # trimap operation
+    black_bg = glob("./trimap_images/*")
+    for path in tqdm(black_bg, total=len(black_bg)):
+        name = path.split("/")[-1].split(".")[0]
+        image = cv2.imread(path, cv2.IMREAD_GRAYSCALE)
+        size = 10
+        number = name[-5]
+        title = "test_image"
+        trimap(path, title, size, number, erosion=10)
+        print("Trimap Created")
+
