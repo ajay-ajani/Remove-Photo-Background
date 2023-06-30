@@ -64,16 +64,15 @@ if __name__ == "__main__":
          final_photo = masked_photo + background_mask
          cv2.imwrite(f"remove_bg/{name}.png", final_photo)
     
-    # trimap
-    name  = "trimap.png"; 
-    image = cv2.imread(name, cv2.IMREAD_GRAYSCALE)
+    # trimap manual input
+    #name  = "trimap.png"; 
+    #image = cv2.imread(name, cv2.IMREAD_GRAYSCALE)
     size = 10;         
     number = name[-5];
     title = "test_image"
 
-    trimap(image, title, size, number, erosion=10);
+    #trimap(image, title, size, number, erosion=10);
 
-"""
     # Path to the directory containing the images
     directory = "remove_bg"
 
@@ -88,7 +87,9 @@ if __name__ == "__main__":
             # Generate the input and output paths for trimap and trimmed images
             input_path = os.path.join(directory, filename)
             output_path = os.path.join(trimap_directory, filename)
+            #print(filename)
+            print(str(input_path))
+            image = cv2.imread(input_path, cv2.IMREAD_GRAYSCALE)
+            trimap(image, title, size, number, erosion=10)
 
-            trimap(input_path, title, size, number, erosion=10)
 
-"""
