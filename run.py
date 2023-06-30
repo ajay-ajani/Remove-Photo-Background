@@ -91,5 +91,29 @@ if __name__ == "__main__":
             print(str(input_path))
             image = cv2.imread(input_path, cv2.IMREAD_GRAYSCALE)
             trimap(image, title, size, number, erosion=10)
+    
+    #Cutout Operation
+    # Define paths
+    input_folder = "./images/"
+    trimap_folder = "./trimap_images/"
+    output_folder = "./output/"
 
+    # Get the list of image files
+    image_files = os.listdir(input_folder)
 
+    # Iterate over the image files
+    for image_file in image_files:
+        # Get the corresponding trimap file
+        image_name = os.path.splitext(image_file)[0]
+        trimap_file = image_name + ".png"
+
+        # Check if the trimap file exists
+        if os.path.isfile(os.path.join(trimap_folder, trimap_file)):
+            # Call the cutout function
+            cutout(
+                os.path.join(input_folder, image_file),
+                os.path.join(trimap_folder, trimap_file),
+                os.path.join(output_folder, image_name + "_cutout.png")
+            )
+        else:
+            print(f"No corresponding trimap found for image: {image_file}")
