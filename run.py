@@ -9,8 +9,8 @@ from tensorflow.keras.utils import CustomObjectScope
 from metrics import dice_loss, dice_coef, iou
 from cutout import perform_image_cutout
 import sys
-#sys.append("./create_trimap/")
 from trimap_module import trimap
+from pymatting import cutout
 
 
 """ Global parameters """
