@@ -72,3 +72,23 @@ if __name__ == "__main__":
     title = "test_image"
 
     trimap(image, title, size, number, erosion=10);
+
+"""
+    # Path to the directory containing the images
+    directory = "remove_bg"
+
+    # Create a new directory for trimap images
+    trimap_directory = "trimap_images"
+    if not os.path.exists(trimap_directory):
+        os.makedirs(trimap_directory)
+
+    # Iterate over each file in the directory
+    for filename in os.listdir(directory):
+        if filename.endswith(".png"):
+            # Generate the input and output paths for trimap and trimmed images
+            input_path = os.path.join(directory, filename)
+            output_path = os.path.join(trimap_directory, filename)
+
+            trimap(input_path, title, size, number, erosion=10)
+
+"""
