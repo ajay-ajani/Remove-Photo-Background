@@ -1,6 +1,5 @@
 import os
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = "2"
-
 import numpy as np
 import cv2
 from glob import glob
@@ -8,6 +7,11 @@ from tqdm import tqdm
 import tensorflow as tf
 from tensorflow.keras.utils import CustomObjectScope
 from metrics import dice_loss, dice_coef, iou
+from cutout import perform_image_cutout
+import sys
+#sys.append("./create_trimap/")
+#from trimap_module import trimap
+
 
 """ Global parameters """
 H = 512
@@ -23,18 +27,16 @@ if __name__ == "__main__":
     np.random.seed(42)
     tf.random.set_seed(42)
     
-        """ Directory for storing files """
+    """ Directory for storing files """
     create_dir("remove_bg")
 
     """ Loading model: DeepLabV3+ """
     with CustomObjectScope({'iou': iou, 'dice_coef': dice_coef, 'dice_loss': dice_loss}):
         model = tf.keras.models.load_model("model.h5")
 
-    # model.summary()
-
     """ Load the dataset """
     data_x = glob("images/*")
-
+    print(data_x)
     for path in tqdm(data_x, total=len(data_x)):
          """ Extracting name """
          name = path.split("/")[-1].split(".")[0]
@@ -53,14 +55,8 @@ if __name__ == "__main__":
          y = np.expand_dims(y, axis=-1)
          y = y > 0.5
 
-         photo_mask = remake
+         photo_mask = y
          background_mask = np.abs(1-y)
-
-         # cv2.imwrite(f"remove_bg/{name}.png", photo_mask*255)
-         # cv2.imwrite(f"remove_bg/{name}.png", background_mask*255)
-
-         # cv2.imwrite(f"remove_bg/{name}.png", image * photo_mask)
-         # cv2.imwrite(f"remove_bg/{name}.png", image * background_mask)
 
          masked_photo = image * photo_mask
          background_mask = np.concatenate([background_mask, background_mask, background_mask], axis=-1)
